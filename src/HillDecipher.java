@@ -6,35 +6,63 @@ import org.jscience.mathematics.vector.DenseVector;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 
 public class HillDecipher {
 
     private ArrayList<DenseVector<Real>> cipherArray;
+    private ArrayList arr;
     private ArrayList<Real> keyList;
     private String cipher;
     private BufferedWriter writer;
     private DenseMatrix<Real> keyMatrix, invMatrix, plainText;
 
+    /**
+     *
+     * Reads the number representation of the ciphertext and turns it into a matrix.
+     *
+     * @param cipherFile
+     * @param blockSize
+     * @return
+     * @throws IOException
+     */
+
 
     public DenseMatrix<Real> readCipher(String cipherFile, int blockSize) throws IOException {
         File file = new File(cipherFile);
         Scanner sc = new Scanner(file);
-        cipher = sc.next();
         cipherArray = new ArrayList();
+        arr = new ArrayList();
 
-        for (int i = 0; i < cipher.length(); i += blockSize) {
+        while(sc.hasNext()){
+            cipher = sc.next();
+            arr.add(cipher);
+        }
+
+        for (int i = 0; i < arr.size(); i += blockSize) {
             keyList = new ArrayList<>();
             for(int j = 0; j < blockSize; j++) {
-                    int letterToNum = ((int) cipher.charAt(i+j));
-                    keyList.add(Real.valueOf(letterToNum - 65));
-                }
-                cipherArray.add(DenseVector.valueOf(keyList));
+                int letter = Integer.parseInt(String.valueOf(arr.get(i+j)));
+                keyList.add(Real.valueOf(letter));
+            }
+            cipherArray.add(DenseVector.valueOf(keyList));
         }
 
         return DenseMatrix.valueOf(cipherArray).transpose();
+
     }
+
+    /**
+     *
+     * Reads the key from file and stores it into a matrix.
+     *
+     * @param keyFile
+     * @param blockSize
+     * @return
+     * @throws IOException
+     */
 
     public DenseMatrix<Real> readKey(String keyFile, int blockSize) throws IOException {
         File file = new File(keyFile);
@@ -50,10 +78,23 @@ public class HillDecipher {
         return keyMatrix;
     }
 
+    /**
+     *
+     * Decodes the cipher by creating the inverse to the key matrix
+     * and multiply it to the cipher.
+     *
+     * @param cipher
+     * @param keyMatrix
+     * @param plainFile
+     * @param radix
+     * @throws IOException
+     */
+
 
     public void decode(DenseMatrix<Real> cipher, DenseMatrix<Real> keyMatrix, String plainFile, int radix) throws IOException {
         writer = new BufferedWriter(new FileWriter(plainFile));
         Real[][] arr = new Real[keyMatrix.getNumberOfRows()][keyMatrix.getNumberOfColumns()];
+        LinkedList temp = new LinkedList();
 
         LargeInteger determinant = LargeInteger.valueOf(keyMatrix.determinant().longValue());
         Real invDet = Real.valueOf(determinant.modInverse(LargeInteger.valueOf(radix)).longValue());
@@ -62,26 +103,73 @@ public class HillDecipher {
 
         for (int i = 0; i < invMatrix.getNumberOfRows(); i++){
             for(int j = 0; j < invMatrix.getNumberOfColumns(); j++){
-               LargeInteger modNum = LargeInteger.valueOf(invMatrix.get(i,j).longValue()).mod(LargeInteger.valueOf(radix));
-               arr[i][j] = Real.valueOf(modNum.longValue());
+                LargeInteger modNum = LargeInteger.valueOf(invMatrix.get(i,j).longValue()).mod(LargeInteger.valueOf(radix));
+                arr[i][j] = Real.valueOf(modNum.longValue());
             }
         }
 
         DenseMatrix<Real> dKey = DenseMatrix.valueOf(arr);
         plainText = dKey.times(cipher).transpose();
 
+
         for(int i = 0; i < plainText.getNumberOfRows(); i++){
             for(int j = 0; j < plainText.getNumberOfColumns(); j++){
-                writer.write(((plainText.get(i,j).intValue() % radix) + 65));
+                temp.add(String.valueOf((plainText.get(i,j).intValue()) % radix));
             }
         }
-        writer.close();
+        removePad(temp,plainFile);
     }
 
-    public static void main(String[] args) throws IOException {
+    /**
+     * Removes the padding from the decrypted message and writes the plaintext to
+     * a file as an number representation of the letters.
+     *
+     * To be able to see the plaintext hilldecode needs to be run.
+     *
+     * @param plain
+     * @param plainFile
+     * @throws IOException
+     */
+
+    public void removePad(LinkedList plain, String plainFile) throws IOException {
+     writer = new BufferedWriter(new FileWriter(plainFile));
+     int last = Integer.parseInt(String.valueOf(plain.getLast()));
+
+     for(int i = 0; i < plain.size() - last; i++){
+         writer.write(String.valueOf(plain.get(i)));
+         writer.write(" ");
+        }
+
+     writer.close();
+    }
+
+    public static void main(String[] args) {
         HillDecipher hillDecipher = new HillDecipher();
-        DenseMatrix cipher = hillDecipher.readCipher(args[4],Integer.parseInt(args[1]));
-        DenseMatrix<Real> key = hillDecipher.readKey(args[2], Integer.parseInt(args[1]));
-        hillDecipher.decode(cipher, key, args[3], Integer.parseInt(args[0]));
+        DenseMatrix cipher;
+
+        if(Integer.parseInt(args[0]) > 256 && Integer.parseInt(args[1]) > 8){
+           System.out.println("The program only supports a maximum radix of 256 and a maximum blocksize of 8, please try again");
+           return;
+        }
+
+        try {
+            cipher = hillDecipher.readCipher(args[4],Integer.parseInt(args[1]));
+        } catch (IOException e) {
+            System.out.println("The cipher file couldn't be open, please try again");
+            return;
+        }
+        DenseMatrix<Real> key;
+        try {
+            key = hillDecipher.readKey(args[2], Integer.parseInt(args[1]));
+        } catch (IOException e) {
+            System.out.println("The key file couldn't be open, please try again");
+            return;
+        }
+        try {
+            hillDecipher.decode(cipher, key, args[3], Integer.parseInt(args[0]));
+        } catch (IOException e) {
+            System.out.println("The plaintext couldn't be written to file, please try again");
+            return;
+        }
     }
 }

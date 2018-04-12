@@ -8,52 +8,74 @@ import java.util.Random;
 
 
 public class HillKeys {
-
-        private  Random rand = new Random();
-        private  Matrix<Real> key;
+        private Random rand;
+        private Matrix<Real> key;
         private BufferedWriter writer;
 
-        private Matrix<Real> generateKey(int radix, int blocksize) {
-           Real[][] matrixArray = new Real[blocksize][blocksize];
+    /**
+     *
+     * Generates a random key matrix based on the chosen radix and blocksize
+     *
+     * @param radix
+     * @param blocksize
+     * @return
+     *
+     */
 
-           while(true) {
-               for (int i = 0; i < blocksize; i++)
-                   for (int j = 0; j < blocksize; j++)
-                       matrixArray[i][j] = Real.valueOf(rand.nextInt(radix));
+    private Matrix<Real> generateKey(int radix, int blocksize) {
+            Real[][] matrixArray = new Real[blocksize][blocksize];
+            rand = new Random();
 
-               key = DenseMatrix.valueOf(matrixArray);
-               LargeInteger determinant = LargeInteger.valueOf(key.determinant().longValue());
+            while (true) {
+                for (int i = 0; i < blocksize; i++)
+                    for (int j = 0; j < blocksize; j++)
+                        matrixArray[i][j] = Real.valueOf(rand.nextInt(radix));
 
-               if(key.determinant() != Real.valueOf(0) && determinant.gcd(LargeInteger.valueOf(radix)) == LargeInteger.valueOf(1)); {
-                   break;
-               }
-           }
+                    key = DenseMatrix.valueOf(matrixArray);
+                    LargeInteger determinant = LargeInteger.valueOf(key.determinant().longValue());
 
-           return key;
+                    if ((key.determinant() != Real.valueOf(0)) && (determinant.gcd(LargeInteger.valueOf(radix)).equals(LargeInteger.valueOf(1)))
+                            && key.getNumberOfRows() == key.getNumberOfColumns()) {
+                        break;
+                    }
+                }
+                return key;
         }
 
-        public void writeToFile(Matrix keyMatrix, String keyFile){
+
+    /**
+     *
+     * Writes the generated key to file
+     *
+     * @param keyMatrix
+     * @param keyFile
+     * @throws IOException
+     */
+
+    public void writeToFile(Matrix keyMatrix, String keyFile) throws IOException {
             File file = new File(keyFile);
-            try {
-                writer = new BufferedWriter(new FileWriter(file));
-                writer.write(keyMatrix.toString().replaceAll("[{,}]",""));
-                writer.close();
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(keyMatrix.toString().replaceAll("[{,}]",""));
+            writer.close();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
-    public static void main(String[] args) throws IOException {
-      HillKeys hillKeys = new HillKeys();
-      Matrix key = hillKeys.generateKey(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-      hillKeys.writeToFile(key, args[2]);
+    public static void main(String[] args)  {
+        if(Integer.parseInt(args[0]) > 256 && Integer.parseInt(args[1]) > 8){
+            System.out.println("The program only supports a maximum radix of 256 and a maximum blocksize of 8, please try again");
+            return;
+        }
 
+        HillKeys hillKeys = new HillKeys();
+        Matrix key = hillKeys.generateKey(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 
-
-      /*Matrix<Real> matrix = generateKey(26,3);
-      writeToFile(matrix);*/
+        try {
+            hillKeys.writeToFile(key, args[2]);
+        } catch (IOException e) {
+            System.out.println("The key couldn't be written to file, please try again");
+            return;
+        }
 
     }
 
-    }
+}

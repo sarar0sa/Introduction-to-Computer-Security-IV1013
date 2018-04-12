@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/HillKeys.java" line="38" mnemonic="7" />
+    <bookmark url="file://$PROJECT_DIR$/src/HillKeys.java" line="57" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7df37776-945a-43d5-bf15-d59e384d1f1d" name="Default" comment="" />
+    <list default="true" id="7df37776-945a-43d5-bf15-d59e384d1f1d" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/HillCipher1/done2.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/HillCipher1/encrypted.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/done2.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/encrypted.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/key121.txt" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/HillCipher1/HillCipher.class" afterPath="$PROJECT_DIR$/out/production/HillCipher1/HillCipher.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillCipher.class" afterPath="$PROJECT_DIR$/src/HillCipher.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillDecipher.class" afterPath="$PROJECT_DIR$/src/HillDecipher.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillKeys.class" afterPath="$PROJECT_DIR$/src/HillKeys.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillCipher.java" afterPath="$PROJECT_DIR$/src/HillCipher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillDecipher.java" afterPath="$PROJECT_DIR$/src/HillDecipher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillKeys.java" afterPath="$PROJECT_DIR$/src/HillKeys.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,11 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HillCipher.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HillCipher.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HillCipher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="57" lean-forward="false" selection-start-line="26" selection-start-column="57" selection-end-line="26" selection-end-column="57" />
+            <state relative-caret-position="1560">
+              <caret line="104" column="71" lean-forward="true" selection-start-line="104" selection-start-column="71" selection-end-line="104" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -30,8 +45,8 @@
       <file leaf-file-name="HillKeys.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HillKeys.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="496">
-              <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+            <state relative-caret-position="306">
+              <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -39,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HillDecipher.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="HillDecipher.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HillDecipher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="1245">
+              <caret line="83" column="37" lean-forward="false" selection-start-line="83" selection-start-column="37" selection-end-line="83" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -59,6 +74,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -82,11 +100,12 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="13" />
-    <option name="y" value="29" />
+    <option name="x" value="303" />
+    <option name="y" value="28" />
     <option name="width" value="1440" />
     <option name="height" value="821" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -115,12 +134,6 @@
               <item name="HillCipher1" type="b2602c69:ProjectViewProjectNode" />
               <item name="HillCipher1" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HillCipher1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HillCipher1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -249,15 +262,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1522154520545</updated>
-      <workItem from="1522154524248" duration="49088000" />
+      <workItem from="1522154524248" duration="79071000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49088000" />
+    <option name="totallyTimeSpent" value="79071000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="13" y="29" width="1440" height="821" extended-state="0" />
+    <frame x="303" y="28" width="1440" height="821" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -269,7 +282,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292011" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3305785" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -297,7 +310,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -326,20 +339,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HillDecipher.java">
+    <entry file="file://$PROJECT_DIR$/src/hilldecode">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HillKeys.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        <state relative-caret-position="306">
+          <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -348,8 +359,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HillCipher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="57" lean-forward="false" selection-start-line="26" selection-start-column="57" selection-end-line="26" selection-end-column="57" />
+        <state relative-caret-position="1560">
+          <caret line="104" column="71" lean-forward="true" selection-start-line="104" selection-start-column="71" selection-end-line="104" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HillDecipher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="83" column="37" lean-forward="false" selection-start-line="83" selection-start-column="37" selection-end-line="83" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

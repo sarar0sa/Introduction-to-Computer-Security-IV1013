@@ -4,7 +4,7 @@ HILLCIPHEREXTRAS=
 # Declare any extra files needed to compile HillKeys here:
 HILLKEYSEXTRAS=
 # Declare any extra files needed to compile HillDecipher here:
-# HILLDECIPHEREXTRAS=sms-cipher.txt
+HILLDECIPHEREXTRAS=sms-cipher.txt
 
 hill1.zip: HillCipher.java $(HILLCIPHEREXTRAS)
 	zip $@ $^

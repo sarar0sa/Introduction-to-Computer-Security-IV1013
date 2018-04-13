@@ -7,6 +7,15 @@ import java.io.*;
 import java.util.Random;
 
 
+/**
+ *
+ * HillKeys creates a random key matrix to the cipher.
+ * All blocksizes and radices works for creating a matrix, however it is
+ * only possible to decode a maximum blocksize of 4.
+ *
+ */
+
+
 public class HillKeys {
         private Random rand;
         private Matrix<Real> key;
@@ -42,7 +51,6 @@ public class HillKeys {
                 return key;
         }
 
-
     /**
      *
      * Writes the generated key to file
@@ -61,8 +69,8 @@ public class HillKeys {
         }
 
     public static void main(String[] args)  {
-        if(Integer.parseInt(args[0]) > 256 && Integer.parseInt(args[1]) > 8){
-            System.out.println("The program only supports a maximum radix of 256 and a maximum blocksize of 8, please try again");
+        if(Integer.parseInt(args[0]) > 256 || Integer.parseInt(args[1]) > 4){
+            System.out.println("The program only supports a maximum radix of 256 and a maximum blocksize of 4, please try again");
             return;
         }
 

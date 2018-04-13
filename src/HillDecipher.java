@@ -3,12 +3,18 @@ import org.jscience.mathematics.number.Real;
 import org.jscience.mathematics.vector.DenseMatrix;
 import org.jscience.mathematics.vector.DenseVector;
 
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+ *
+ * HillDecipher creates an inverted matrix from the key matrix and then decrypts the ciphertext.
+ * The program only supports a maximum blocksize of 4, if higher some of the letters becomes decoded
+ * wrong, and I really don't know why. All radices are supported; 26, 128, 256.
+ *
+ */
 
 public class HillDecipher {
 
@@ -37,9 +43,10 @@ public class HillDecipher {
         arr = new ArrayList();
 
         while(sc.hasNext()){
-            cipher = sc.next();
+            cipher = String.valueOf(sc.nextInt());
             arr.add(cipher);
         }
+
 
         for (int i = 0; i < arr.size(); i += blockSize) {
             keyList = new ArrayList<>();
@@ -74,7 +81,6 @@ public class HillDecipher {
             }
         }
         keyMatrix = DenseMatrix.valueOf(matrixArray);
-
         return keyMatrix;
     }
 
@@ -92,14 +98,12 @@ public class HillDecipher {
 
 
     public void decode(DenseMatrix<Real> cipher, DenseMatrix<Real> keyMatrix, String plainFile, int radix) throws IOException {
-        writer = new BufferedWriter(new FileWriter(plainFile));
         Real[][] arr = new Real[keyMatrix.getNumberOfRows()][keyMatrix.getNumberOfColumns()];
         LinkedList temp = new LinkedList();
 
         LargeInteger determinant = LargeInteger.valueOf(keyMatrix.determinant().longValue());
         Real invDet = Real.valueOf(determinant.modInverse(LargeInteger.valueOf(radix)).longValue());
         invMatrix = keyMatrix.inverse().times(Real.valueOf(determinant.longValue()).times(invDet));
-
 
         for (int i = 0; i < invMatrix.getNumberOfRows(); i++){
             for(int j = 0; j < invMatrix.getNumberOfColumns(); j++){
@@ -110,7 +114,6 @@ public class HillDecipher {
 
         DenseMatrix<Real> dKey = DenseMatrix.valueOf(arr);
         plainText = dKey.times(cipher).transpose();
-
 
         for(int i = 0; i < plainText.getNumberOfRows(); i++){
             for(int j = 0; j < plainText.getNumberOfColumns(); j++){
@@ -126,20 +129,17 @@ public class HillDecipher {
      *
      * To be able to see the plaintext hilldecode needs to be run.
      *
-     * @param plain
-     * @param plainFile
      * @throws IOException
      */
 
-    public void removePad(LinkedList plain, String plainFile) throws IOException {
+   public void removePad(LinkedList plain, String plainFile) throws IOException {
      writer = new BufferedWriter(new FileWriter(plainFile));
      int last = Integer.parseInt(String.valueOf(plain.getLast()));
 
-     for(int i = 0; i < plain.size() - last; i++){
+     for(int i = 0; i < plain.size() - last; i++) {
          writer.write(String.valueOf(plain.get(i)));
          writer.write(" ");
-        }
-
+     }
      writer.close();
     }
 
@@ -147,7 +147,7 @@ public class HillDecipher {
         HillDecipher hillDecipher = new HillDecipher();
         DenseMatrix cipher;
 
-        if(Integer.parseInt(args[0]) > 256 && Integer.parseInt(args[1]) > 8){
+        if(Integer.parseInt(args[0]) > 256 || Integer.parseInt(args[1]) > 4){
            System.out.println("The program only supports a maximum radix of 256 and a maximum blocksize of 8, please try again");
            return;
         }

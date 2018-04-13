@@ -2,6 +2,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+/**
+ *
+ *
+ * HillCipher reads the plaintext from file and creates a cipher.
+ * All radices and blocksizes works for creating the cipher, however if you want to decode the
+ * message it is only possible with the maximum blocksize of 4.
+ *
+ */
+
+
 public class HillCipher  {
     private ArrayList msgArray;
     private BufferedWriter writer;
@@ -25,12 +36,12 @@ public class HillCipher  {
             msg = sc.next();
             msgArray.add(msg);
         }
-        addPadding(msgArray, blocksize);
+       addPadding(msgArray, blocksize);
     }
 
     /**
      *
-     * Adds padding to the message
+     * Adds padding to the message in case we get an uneven message
      *
      * @param msgArray
      * @param blocksize
@@ -81,7 +92,7 @@ public class HillCipher  {
             for(int j = 0; j < keyMatrix.length; j++){
                 int encoded = 0;
                 for(int k = 0; k < keyMatrix.length; k++){
-                    encoded += (Integer.parseInt(String.valueOf(msgArray.get(k+i))) * keyMatrix[j][k]);
+                    encoded += (Integer.parseInt(String.valueOf(msgArray.get(k+i)))) * keyMatrix[j][k];
                 }
                 try {
                     writer.write(String.valueOf(encoded % radix));
@@ -94,12 +105,13 @@ public class HillCipher  {
         writer.close();
     }
 
-    public static void main(String[] args)  {
-        HillCipher hillCipher = new HillCipher();
-        if(Integer.parseInt(args[0]) > 256 && Integer.parseInt(args[1]) > 8){
-            System.out.println("The program only supports a maximum radix of 256 and a maximum blocksize of 8, please try again");
+    public static void main(String[] args) {
+        if (Integer.parseInt(args[0]) > 256 || Integer.parseInt(args[1]) > 4) {
+            System.out.println("The program only supports a maximum radix of 256 and a maximum blocksize of 4, please try again");
             return;
-        }
+
+        } else {
+            HillCipher hillCipher = new HillCipher();
 
             try {
                 hillCipher.readMsg(args[3], Integer.parseInt(args[1]));
@@ -114,3 +126,4 @@ public class HillCipher  {
             }
         }
     }
+}

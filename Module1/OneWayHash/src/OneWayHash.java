@@ -1,4 +1,3 @@
-import java.io.UnsupportedEncodingException;
 import java.security.*;
 
 
@@ -23,11 +22,10 @@ public class OneWayHash {
      * Prints out how many trials it took.
      *
      * @param digest the digest the comparing are made against
-     * @throws UnsupportedEncodingException
      */
 
 
-    public void bruteForce(byte[] digest) throws UnsupportedEncodingException {
+    public void bruteForce(byte[] digest) {
         while(true) {
             counter++;
             String inputText = Long.valueOf(counter).toString();
@@ -80,10 +78,10 @@ public class OneWayHash {
     }
 
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         OneWayHash oneWayHash = new OneWayHash();
-        String inputText = args[0];
-        //String inputText = "helloo";
+        //String inputText = args[0];
+        String inputText = "helloo";
         byte[] theDigest = oneWayHash.makeDigest(inputText);
         System.out.print("Digest for the message \"" + inputText +"\", using SHA-256 is: ");
         printDigest(theDigest);

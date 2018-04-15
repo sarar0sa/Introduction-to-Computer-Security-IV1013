@@ -5,21 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7df37776-945a-43d5-bf15-d59e384d1f1d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/encode11.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/encode211.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/hill1.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/hill2.zip" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillCipher.class" afterPath="$PROJECT_DIR$/src/HillCipher.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillDecipher.class" afterPath="$PROJECT_DIR$/src/HillDecipher.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillKeys.class" afterPath="$PROJECT_DIR$/src/HillKeys.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/hill3.zip" afterPath="$PROJECT_DIR$/src/hill3.zip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillCipher.java" afterPath="$PROJECT_DIR$/src/HillCipher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillDecipher.java" afterPath="$PROJECT_DIR$/src/HillDecipher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillKeys.java" afterPath="$PROJECT_DIR$/src/HillKeys.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cipher.txt" afterPath="$PROJECT_DIR$/src/cipher.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/keymatrix.txt" afterPath="$PROJECT_DIR$/src/keymatrix.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/plain-alpha.txt" afterPath="$PROJECT_DIR$/src/plain-alpha.txt" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/HillCipher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/HillCipher1.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/HillDecipher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/HillKeys.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hilldecode" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hillencode" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/jscience.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/cipher-alpha.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/invkey3-26.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/key3-26.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/plain-alpha.txt" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,44 +26,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HillCipher.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HillCipher.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="105" column="5" lean-forward="false" selection-start-line="105" selection-start-column="5" selection-end-line="105" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HillKeys.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/HillKeys.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1065">
-              <caret line="71" column="45" lean-forward="false" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HillDecipher.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HillDecipher.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -100,7 +59,8 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
+    <option name="x" value="167" />
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="828" />
@@ -263,16 +223,15 @@
       <option name="presentableId" value="Default" />
       <updated>1522154520545</updated>
       <workItem from="1522154524248" duration="84955000" />
-      <workItem from="1523556998333" duration="10398000" />
+      <workItem from="1523556998333" duration="10679000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95353000" />
+    <option name="totallyTimeSpent" value="95634000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="828" extended-state="1" />
-    <editor active="true" />
+    <frame x="167" y="23" width="1440" height="828" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -286,7 +245,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.046494994" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26609442" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -369,16 +328,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HillCipher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="105" column="5" lean-forward="false" selection-start-line="105" selection-start-column="5" selection-end-line="105" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HillDecipher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -393,6 +342,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1065">
           <caret line="71" column="45" lean-forward="false" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HillCipher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="105" column="5" lean-forward="false" selection-start-line="105" selection-start-column="5" selection-end-line="105" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

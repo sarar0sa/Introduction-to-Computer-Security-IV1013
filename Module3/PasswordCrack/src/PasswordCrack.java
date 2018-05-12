@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PasswordCrack {
-    static ArrayList<String> wordList, saltList;
+    static ArrayList<String> wordList, saltList, mangleList;
     static HashMap<String,String> userPass;
 
 
@@ -22,23 +22,11 @@ public class PasswordCrack {
             userPass.put(parts[1],parts[0]);
             saltList.add(parts[1].substring(0,2));
             String[] name = parts[4].split(" ");
+
             for (String names: name) {
                 wordList.add(names);
             }
-            //System.out.println(parts[4].split(" "));
-
-            /*for(int i = 0; i < parts.length; i++){
-                System.out.println(parts[i]);
-            }*/
         }
-        //System.out.println(userPass.keySet());
-        //System.out.println(userPass.values());
-        //System.out.println(jcrypt.crypt("Li", "Liberterian"));
-        //System.out.print(jcrypt.crypt("Si", "Liberterian"));
-
-        /*for(int i = 0; i < saltList.size(); i++){
-            System.out.println(saltList.get(i));
-        }*/
     }
 
     public static void readDict() throws IOException {
@@ -66,49 +54,140 @@ public class PasswordCrack {
         wordList.add("login");
         wordList.add("passw0rd");
 
-         /*for(int i = 0; i < wordList.size(); i++){
-                System.out.println(wordList.get(i));
-            }*/
+        wordList.addAll(mangle());
 
     }
 
     public static void hashPass(){
         for (String word: wordList)
         {
-                isPass(word);
-        }
-        mangle();
-    }
+            for (String salt: saltList) {
+                String hash = jcrypt.crypt(salt,word);
+                if(checkPass(hash) == true){
+                    System.out.println("User: " + userPass.get(hash) + " has the password: " + word);
+                    userPass.remove(hash);
+                }
 
-    public static void mangle(){
-        for (String word: wordList){
-
-            isPass(word.toLowerCase());
-
-            isPass(word.toUpperCase());
-            
-
-        }
-
-    }
-
-    public static void isPass(String word){
-        for (String salt: saltList) {
-            String hash = jcrypt.crypt(salt,word);
-            if(checkPass(hash) == true){
-                System.out.println("User: " + userPass.get(hash) + " has the password: " + word);
-                userPass.remove(hash);
             }
         }
 
+        }
+
+
+
+    public static ArrayList mangle(){
+         mangleList = new ArrayList();
+        for (String word: wordList){
+
+            mangleList.add(toLower(word));
+
+            mangleList.add(toUpper(word));
+
+            mangleList.add(deleteLast(word));
+
+            mangleList.add(deleteFirst(word));
+
+            mangleList.add(reverse(word));
+
+            mangleList.add(duplicate(word));
+
+            mangleList.add(mirror1(word));
+
+            mangleList.add(mirror2(word));
+
+            mangleList.add(capitalize(word));
+
+            mangleList.add(ncapitalize(word));
+
+            mangleList.add(toggle(word));
+
+            mangleList.add(toggle2(word));
+
+
+           for(int i = 48; i < 58; i++){
+                mangleList.add((char)i + word);
+                mangleList.add(word + (char)i);
+            }
+
+        }
+
+        return mangleList;
+
     }
 
+    public static String toUpper(String word){
+        return word.toUpperCase();
 
-    public static boolean checkPass(String hash){
-
-        return userPass.containsKey(hash);
     }
 
+    public static String toLower(String word){
+        return word.toLowerCase();
+
+    }
+
+    public static String deleteLast(String word){
+        return word.substring(0,word.length() - 1);
+    }
+
+    public static String deleteFirst(String word){
+        return word.substring(1);
+    }
+
+    public static String reverse(String word){
+        return new StringBuilder(word).reverse().toString();
+    }
+
+    public static String duplicate(String word){
+
+        return word + word;
+    }
+
+    public static String mirror1(String word){
+        return reverse(word) + word;
+    }
+
+    public static String mirror2(String word){
+        return word + reverse(word);
+    }
+
+    public static String capitalize(String word){
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
+    }
+
+    public static String ncapitalize(String word){
+        return word.substring(0, 1).toLowerCase() + word.substring(1).toUpperCase();
+    }
+
+    public static String toggle(String word){
+        String toggled = "";
+
+        for (int i = 0; i < word.length(); i++) {
+            if (i % 2 == 0) {
+                toggled += word.substring(i, i + 1).toUpperCase();
+            } else {
+                toggled += word.substring(i, i + 1);
+            }
+        }
+
+        return toggled;
+    }
+
+    public static String toggle2(String word){
+        String toggled = "";
+        for (int i = 0; i < word.length(); i++) {
+            if (i % 2 != 0) {
+                toggled += word.substring(i, i + 1).toUpperCase();
+            } else {
+                toggled += word.substring(i, i + 1);
+            }
+        }
+        return toggled;
+    }
+
+    public static boolean checkPass(String word){
+
+        return userPass.containsKey(word);
+    }
 
     public static void main(String[] args) throws IOException {
         readFile();

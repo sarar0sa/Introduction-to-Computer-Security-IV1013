@@ -1,26 +1,32 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PasswordCrack {
-    static ArrayList<String> wordList, saltList, mangleList;
-    static HashMap<String,String> userPass;
+     private ArrayList<String> wordList;
+     private HashMap<String,String> userPass;
+     private BufferedWriter bf;
 
 
-    public static void readFile() throws IOException {
-        FileReader fr = new FileReader("/Users/sararosander/Desktop/KTH/Datasäkerhet/Module3/cracker-challenge/passwd2.txt");
+    /**
+     *
+     * Reads the password file and stores the password and salt in a Hashmap.
+     * Also extracts the names of the users and stores it in an Arraylist.
+     *
+     * @param file
+     * @throws IOException
+     */
+
+    public void readPasswordFile(String file) throws IOException {
+        FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
+        bf = new BufferedWriter(new FileWriter("passwd2-plain.txt"));
         String line;
         userPass = new HashMap();
-        saltList = new ArrayList();
         wordList = new ArrayList();
         while ((line = br.readLine()) != null) {
             String[] parts = line.split(":");
-            userPass.put(parts[1],parts[0]);
-            saltList.add(parts[1].substring(0,2));
+            userPass.put(parts[1], parts[1].substring(0,2));
             String[] name = parts[4].split(" ");
 
             for (String names: name) {
@@ -29,8 +35,17 @@ public class PasswordCrack {
         }
     }
 
-    public static void readDict() throws IOException {
-        FileReader fr = new FileReader("/Users/sararosander/Desktop/KTH/Datasäkerhet/Module3/PasswordCrack/dict.txt");
+    /**
+     *
+     * Reads the dictionary file and adds it to the ArrayList.
+     * Also add common words to the ArrayList.
+     *
+     * @param file
+     * @throws IOException
+     */
+
+    public void readDict(String file) throws IOException {
+        FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
         String line;
         while ((line = br.readLine()) != null) {
@@ -54,111 +69,129 @@ public class PasswordCrack {
         wordList.add("login");
         wordList.add("passw0rd");
 
-        wordList.addAll(mangle());
+        crackPassword(wordList);
 
     }
 
-    public static void hashPass(){
-        for (String word: wordList)
-        {
-            for (String salt: saltList) {
-                String hash = jcrypt.crypt(salt,word);
-                if(checkPass(hash) == true){
-                    System.out.println("User: " + userPass.get(hash) + " has the password: " + word);
-                    userPass.remove(hash);
+    /**
+     *
+     * First checks the Wordlist without any mangles,
+     * If, after that, it still exists users with uncrackade password mangle is
+     * called recursive until all password has been cracked.
+     *
+     * @param words
+     * @throws IOException
+     */
+
+    public void crackPassword(ArrayList<String> words) throws IOException {
+        for (String word : words) {
+            checkPass(word);
+        }
+        if(userPass.isEmpty() == false){
+            crackPassword(mangle(words));
+        }
+
+        else {
+            bf.close();
+            return;
+        }
+
+    }
+
+    /**
+     *
+     * Method that mangle the words.
+     *
+     * @param mangled
+     * @return
+     * @throws IOException
+     */
+
+    public ArrayList<String> mangle(ArrayList<String> mangled) throws IOException {
+         ArrayList<String> mangleList = new ArrayList<>();
+        for (String word: mangled) {
+            mangleList.add(checkPass(toLower(word)));
+            mangleList.add(checkPass(toUpper(word)));
+            mangleList.add(checkPass(capitalize(word)));
+            mangleList.add(checkPass(ncapitalize(word)));
+
+            // If the word length is bigger than eight, a deleted letter won't change the hash
+            if (word.length() <= 8) {
+                mangleList.add(checkPass(deleteLast(word)));
+                mangleList.add(checkPass(deleteFirst(word)));
+            }
+
+            mangleList.add(checkPass(reverse(word)));
+            mangleList.add(checkPass(mirror1(word)));
+            mangleList.add(checkPass(mirror2(word)));
+            mangleList.add(checkPass(toggle(word)));
+            mangleList.add(checkPass(toggle2(word)));
+
+            // If the word is bigger than eight, a duplicate word or a added letter won't change the hash.
+            if (word.length() < 8) {
+                mangleList.add(checkPass(duplicate(word)));
+                // Add number to the word
+                for (int i = 48; i < 58; i++) {
+                    mangleList.add(checkPass((char) i + word));
+                    mangleList.add(checkPass(word + (char) i));
                 }
-
-            }
-        }
-
-        }
-
-
-
-    public static ArrayList mangle(){
-         mangleList = new ArrayList();
-        for (String word: wordList){
-
-            mangleList.add(toLower(word));
-
-            mangleList.add(toUpper(word));
-
-            mangleList.add(deleteLast(word));
-
-            mangleList.add(deleteFirst(word));
-
-            mangleList.add(reverse(word));
-
-            mangleList.add(duplicate(word));
-
-            mangleList.add(mirror1(word));
-
-            mangleList.add(mirror2(word));
-
-            mangleList.add(capitalize(word));
-
-            mangleList.add(ncapitalize(word));
-
-            mangleList.add(toggle(word));
-
-            mangleList.add(toggle2(word));
-
-
-           for(int i = 48; i < 58; i++){
-                mangleList.add((char)i + word);
-                mangleList.add(word + (char)i);
             }
 
         }
-
         return mangleList;
-
     }
 
-    public static String toUpper(String word){
+    /**
+     *
+     * The different methods used for mangle
+     *
+     * @param word
+     * @return
+     */
+
+    public String toUpper(String word){
         return word.toUpperCase();
 
     }
 
-    public static String toLower(String word){
+    public String toLower(String word){
         return word.toLowerCase();
 
     }
 
-    public static String deleteLast(String word){
+    public String deleteLast(String word){
         return word.substring(0,word.length() - 1);
     }
 
-    public static String deleteFirst(String word){
+    public String deleteFirst(String word){
         return word.substring(1);
     }
 
-    public static String reverse(String word){
+    public String reverse(String word){
         return new StringBuilder(word).reverse().toString();
     }
 
-    public static String duplicate(String word){
-
+    public String duplicate(String word){
         return word + word;
     }
 
-    public static String mirror1(String word){
+    public String mirror1(String word){
         return reverse(word) + word;
     }
 
-    public static String mirror2(String word){
+    public String mirror2(String word){
         return word + reverse(word);
     }
 
-    public static String capitalize(String word){
+    public String capitalize(String word){
         return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 
-    public static String ncapitalize(String word){
+    public String ncapitalize(String word){
         return word.substring(0, 1).toLowerCase() + word.substring(1).toUpperCase();
     }
 
-    public static String toggle(String word){
+    public String toggle(String word){
         String toggled = "";
 
         for (int i = 0; i < word.length(); i++) {
@@ -172,7 +205,7 @@ public class PasswordCrack {
         return toggled;
     }
 
-    public static String toggle2(String word){
+    public String toggle2(String word){
         String toggled = "";
         for (int i = 0; i < word.length(); i++) {
             if (i % 2 != 0) {
@@ -184,14 +217,46 @@ public class PasswordCrack {
         return toggled;
     }
 
-    public static boolean checkPass(String word){
 
-        return userPass.containsKey(word);
+     /**
+     *
+     *  Checks if the word exists in the password file by first encrypt it with jcrypt.
+     * Removes the users with password that have been cracked.
+     * @param word
+     * @return
+     * @throws IOException
+     */
+
+    public String checkPass(String word) throws IOException {
+        ArrayList<String> toRemove = new ArrayList();
+        for (String password : userPass.keySet()) {
+            String hash = jcrypt.crypt(userPass.get(password), word);
+            if (userPass.containsKey(hash)) {
+                bf.write(word);
+                bf.newLine();
+                System.out.println(word);
+                toRemove.add(hash);
+            }
+        }
+        for (String password : toRemove) {
+            userPass.remove(password);
+        }
+        bf.flush();
+        return word;
     }
 
-    public static void main(String[] args) throws IOException {
-        readFile();
-        readDict();
-        hashPass();
+    public static void main(String[] args) {
+        PasswordCrack passwordCrack = new PasswordCrack();
+        try {
+            passwordCrack.readPasswordFile(args[1]);
+        } catch (IOException e) {
+            System.out.println("The password file couldn't be open, please try again");
+        }
+        try {
+            passwordCrack.readDict(args[0]);
+        } catch (IOException e) {
+            System.out.println("The dictionary couldn't be open, please try again");
+        }
+
     }
 }

@@ -81,14 +81,12 @@ public class Hiddec {
 
         int endIndex = hiddec.findKey(key, input, encryptedKey, startIndex + 16);
 
+        // Extract the data
         byte[] data = hiddec.decrypt(key, input, startIndex + 16, endIndex);
+
+        // Extract data to verify
         byte[] verifyData = hiddec.decrypt(key, input, endIndex + 16, endIndex + 32);
-
         byte[] hashOfData = hiddec.hash(data);
-
-        System.out.println(Arrays.toString(hashOfData));
-        System.out.println(Arrays.toString(verifyData));
-
 
         if(Arrays.equals(verifyData,hashOfData)){
             hiddec.writeToFile(data, output);

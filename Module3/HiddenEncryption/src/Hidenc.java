@@ -3,7 +3,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.security.*;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Hidenc {
@@ -54,16 +54,30 @@ public class Hidenc {
         return cipher.doFinal(data);
     }
 
-    public byte[] createBlob(byte[] encryptedKey, byte[] input, byte[] hashOfData, byte[] key) throws IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        buffer.write(encryptedKey);
-        buffer.write(input);
-        buffer.write(encryptedKey);
-        buffer.write(hashOfData);
-        byte[] theBlob = buffer.toByteArray();
+    public byte[] createBlob(byte[] encryptedKey, byte[] input, byte[] hashOfData) throws IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+        ArrayList<Byte> temp = new ArrayList<>();
 
+        for (byte bit: encryptedKey) {
+            temp.add(bit);
+        }
+
+        for (byte bit: input) {
+            temp.add(bit);
+        }
+
+        for (byte bit: encryptedKey) {
+            temp.add(bit);
+        }
+
+        for (byte bit: hashOfData) {
+            temp.add(bit);
+        }
+
+        byte[] theBlob = new byte[temp.size()];
+        for(int i = 0; i < temp.size(); i++){
+            theBlob[i] = temp.get(i);
+        }
         return theBlob;
-
     }
 
     public void placeBlob(int offset, byte[] template, byte[] theBlob, String output, byte[] key) throws IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
@@ -95,8 +109,7 @@ public class Hidenc {
 
         byte[] encryptedKey = hidenc.hash(key);
         byte[] hashOfData = hidenc.hash(input);
-
-        byte[] theBlob = hidenc.createBlob(encryptedKey, input, hashOfData, key);
+        byte[] theBlob = hidenc.createBlob(encryptedKey, input, hashOfData);
 
         hidenc.placeBlob(offset,template,theBlob,output, key);
 

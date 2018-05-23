@@ -9,7 +9,6 @@ import java.util.Arrays;
 
 public class Hiddec {
     Cipher cipher;
-    private static byte[] ctr = null;
 
     public String getArgs(String args){
         String[] argument = args.split("=");
@@ -110,7 +109,6 @@ public class Hiddec {
             init(ctr, key);
             byte[] decrypted = decrypt(Arrays.copyOfRange(input, i, i + 16));
             if(Arrays.equals(decrypted,encryptedKey)){
-                System.out.println(i);
                 return i;
             }
         }
@@ -122,7 +120,6 @@ public class Hiddec {
         for(int i = startSearch; i <= input.length; i += 16){
             byte[] decrypted = decrypt(Arrays.copyOfRange(input,i, i + 16));
             if(Arrays.equals(decrypted,encryptedKey)){
-                System.out.println(i);
                 return i;
             }
         }
@@ -164,17 +161,17 @@ public class Hiddec {
 
     public static void main(String args[]) throws NoSuchAlgorithmException, IOException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
         Hiddec hiddec = new Hiddec();
-        // CTR
+        //CTR
         if(args.length == 4) {
             byte[] key = hiddec.hexToByte(hiddec.getArgs(args[0]));
             byte[] encryptedKey = hiddec.hash(key);
-            ctr = hiddec.hexToByte(hiddec.getArgs(args[1]));
+            byte[] ctr = hiddec.hexToByte(hiddec.getArgs(args[1]));
             byte[] input = hiddec.readInputFile(hiddec.getArgs(args[2]));
             String output = hiddec.getArgs(args[3]);
 
             hiddec.ctr(key, encryptedKey, ctr, input, output);
         }
-        // ECB
+        //ECB
         else if (args.length == 3){
             byte[] key = hiddec.hexToByte(hiddec.getArgs(args[0]));
             byte[] encryptedKey = hiddec.hash(key);

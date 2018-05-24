@@ -9,8 +9,22 @@ import java.util.Random;
 
 public class Hidenc {
     private byte[] key, ctr, input, template = null;
-    int offset, size = -1;
-    String output;
+    private int offset = -1, size = -1;
+    private String output;
+
+    /**
+     *
+     * Extracts entered arguments
+     *
+     * @param args
+     * @throws IOException
+     * @throws NoSuchPaddingException
+     * @throws BadPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws InvalidAlgorithmParameterException
+     */
 
     public void getArgs(String[] args) throws IOException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
         for (String arg: args) {
@@ -43,6 +57,10 @@ public class Hidenc {
                 case "--size":
                     size = Integer.parseInt(argument[1]);
                     break;
+
+                default:
+                    System.out.println("You have entered a invalid argument");
+                    return;
             }
         }
 
@@ -51,36 +69,79 @@ public class Hidenc {
                 return;
             }
 
-            /*if (key == null|| input == null || output == null || (template == null || size == -1)){
-                System.out.println("Wrong arguments, the required arguments are: --key --input --output (--template or --size)");
+            if(template == null && size == -1 ){
+                System.out.println("At least on of template or size must be set");
                 return;
-            }*/
+            }
+
+            if (key == null|| input == null || output == null){
+                System.out.println("You need to at least specify the following arguments: --key --input --output (--template or --size)");
+                return;
+            }
 
             if(size != -1){
                template =  createTemplate(size);
             }
 
-            if(offset == -1){
-
-            }
-
             begin();
     }
 
+    /**
+     *
+     * Creates the hash of the key, the hash of data and then creates the blob,
+     * which then will be placed in the template. If not offset has been entered by
+     * user a random offset is created.
+     *
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeyException
+     * @throws BadPaddingException
+     * @throws NoSuchPaddingException
+     * @throws IllegalBlockSizeException
+     * @throws IOException
+     * @throws InvalidAlgorithmParameterException
+     */
 
-    public void begin() throws IllegalBlockSizeException, NoSuchAlgorithmException, IOException, BadPaddingException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public void begin() throws NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, IllegalBlockSizeException, IOException, InvalidAlgorithmParameterException {
         byte[] encryptedKey = hash(key);
         byte[] hashOfData = hash(input);
         byte[] theBlob = createBlob(encryptedKey, input, hashOfData);
-        placeBlob(offset,template,theBlob,output, key);
 
+        if(offset == -1){
+            randomOffset();
+            if(offset + theBlob.length > template.length){
+                randomOffset();
+            }
+        }
+
+        if(offset + theBlob.length > template.length){
+            System.out.print("The blob can not fit into the template");
+            return;
+        }
+        else {
+            placeBlob(offset, template, theBlob, output, key);
+        }
     }
+
+    /**
+     *
+     * Converts a hexadeciaml string to a byte array.
+     *
+     * @param key
+     * @return
+     */
 
 
     public byte[] hexToByte(String key){
         return DatatypeConverter.parseHexBinary(key);
-
     }
+
+    /**
+     *
+     * Creates a random template if the user has not specified one.
+     *
+     * @param size
+     * @return
+     */
 
     public byte[] createTemplate(int size){
         byte[] template = new byte[size];
@@ -90,35 +151,90 @@ public class Hidenc {
         return template;
     }
 
-    /*public int randomOffset(){
-        Random random = new Random();
-        int offset = random.nextInt() * 16;
+    /**
+     *
+     * Creates a random offset if the user has not specified one.
+     *
+     */
 
-        return template;
-    }*/
+    public void randomOffset() {
+        while((offset % 16) != 0){
+            offset  = new Random().nextInt(template.length);
+        }
+    }
 
-
+    /***
+     *
+     *
+     * Reads the input file and store it in a byte array.
+     *
+     * @param input
+     * @return
+     * @throws IOException
+     */
 
     public byte[] readInputFile(String input) throws IOException {
         File file = new File(input);
         byte[] byteArray = new byte[(int)file.length()];
-        FileInputStream fis = new FileInputStream(file);
-        fis.read(byteArray);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("The input or template file could not be found.");
+            System.exit(0);
+        }
+        try {
+            fis.read(byteArray);
+        } catch (IOException e) {
+            System.out.println("The input file could not be opened");
+            System.exit(0);
+        }
         fis.close();
 
         return byteArray;
 
     }
 
-    public byte[] hash(byte[] key) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
+    /**
+     *
+     *
+     * Calculates the MD5 hash of a given key.
+     *
+     * @param key
+     * @return
+     */
+
+    public byte[] hash(byte[] key) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("The hash algorithm is not available");
+            System.exit(0);
+        }
         md.update(key);
         byte[] digest = md.digest();
 
         return digest;
     }
 
-    public byte[] encrypt(byte[] key, byte[] data) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
+    /***
+     *
+     *
+     * Encrypts the file, either with ECB- or CTR-mode based on the users input.
+     *
+     * @param key
+     * @param data
+     * @return
+     * @throws NoSuchPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeyException
+     * @throws BadPaddingException
+     * @throws IllegalBlockSizeException
+     * @throws InvalidAlgorithmParameterException
+     */
+
+    public byte[] encrypt(byte[] key, byte[] data) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
         if(ctr == null){
             Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
             SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
@@ -136,6 +252,23 @@ public class Hidenc {
             return cipher.doFinal(data);
         }
     }
+
+    /**
+     *
+     *
+     * Creates the blob
+     *
+     * @param encryptedKey
+     * @param input
+     * @param hashOfData
+     * @return
+     * @throws IOException
+     * @throws IllegalBlockSizeException
+     * @throws InvalidKeyException
+     * @throws BadPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     */
 
     public byte[] createBlob(byte[] encryptedKey, byte[] input, byte[] hashOfData) throws IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
         ArrayList<Byte> temp = new ArrayList<>();
@@ -163,6 +296,24 @@ public class Hidenc {
         return theBlob;
     }
 
+    /**
+     *
+     * Places the blob in the template.
+     *
+     * @param offset
+     * @param template
+     * @param theBlob
+     * @param output
+     * @param key
+     * @throws IOException
+     * @throws IllegalBlockSizeException
+     * @throws InvalidKeyException
+     * @throws BadPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     * @throws InvalidAlgorithmParameterException
+     */
+
     public void placeBlob(int offset, byte[] template, byte[] theBlob, String output, byte[] key) throws IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException {
         int counter = 0;
         theBlob = encrypt(key, theBlob);
@@ -173,35 +324,43 @@ public class Hidenc {
         writeToFile(template,output);
     }
 
+    /**
+     *
+     * Writes the result to output file which has been specified by the user.
+     *
+     * @param data
+     * @param output
+     * @throws IOException
+     */
+
     public void writeToFile(byte[] data, String output) throws IOException {
-        FileOutputStream fos = new FileOutputStream(output);
-        fos.write(data);
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(output);
+        } catch (FileNotFoundException e) {
+            System.out.println("The output file was not found");
+            return;
+        }
+        try {
+            fos.write(data);
+        } catch (IOException e) {
+            System.out.println("The blob could not be written to file");
+            return;
+        }
         fos.close();
     }
 
 
     public static void main(String args[]) throws NoSuchAlgorithmException, IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException, InvalidAlgorithmParameterException {
         Hidenc hidenc = new Hidenc();
-        /*byte[] template = hidenc.createTemplate();
-        byte[] key = hidenc.hexToByte(hidenc.getArgs(args[0]));
-        int offset = Integer.parseInt(hidenc.getArgs(args[1]));
-        byte[] input = hidenc.readInputFile(hidenc.getArgs(args[2]));
-        String output = hidenc.getArgs(args[3]);
-        //String template = hidenc.getArgs(args[4]);*/
-       // if(args.length > 6 || args.length < 6){
-         //   System.out.print("You have too many or too few arguments, please try again");
-        //}
+        if(args.length < 4){
+            System.out.print("You have entered too few arguments");
+            return;
+        }
 
-        //else {
+        else {
             hidenc.getArgs(args);
-        //}
-
-        /*byte[] encryptedKey = hidenc.hash(key);
-        byte[] hashOfData = hidenc.hash(input);
-        byte[] theBlob = hidenc.createBlob(encryptedKey, input, hashOfData);
-
-        hidenc.placeBlob(offset,template,theBlob,output, key);*/
-
+        }
     }
 
 }

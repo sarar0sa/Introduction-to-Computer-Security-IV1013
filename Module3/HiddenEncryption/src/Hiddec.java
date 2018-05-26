@@ -149,7 +149,7 @@ public class Hiddec {
 
     /**
      *
-     * Decryption runs in CTR-mode. The hash value for the key are found in the input file
+     * Decryption which uses CTR-mode. The hash value for the key are found in the input file
      * to mark the start and end of the data. The data is then extracted. To verify the
      * extracted data the hash value of the data are calculated and checked against the last
      * block of the blob.
@@ -203,7 +203,7 @@ public class Hiddec {
     }
     /**
      *
-     * Decryption runs in ECB-mode. The hash value for the key are found in the input file
+     * Decryption which uses ECB-mode. The hash value for the key are found in the input file
      * to mark the start and end of the data. The data is then extracted. To verify the
      * extracted data the hash value of the data are calculated and checked against the last
      * block of the blob.
@@ -246,7 +246,7 @@ public class Hiddec {
 
     /**
      *
-     * Finds the first H(k) in the input file. Used in CTR-mode.
+     * Finds the first H(k) in the input file. Used only in CTR-mode.
      *
      *
      * @param key

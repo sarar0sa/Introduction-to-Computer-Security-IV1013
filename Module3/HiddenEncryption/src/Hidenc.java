@@ -70,7 +70,7 @@ public class Hidenc {
             }
 
             if(template == null && size == -1 ){
-                System.out.println("At least on of template or size must be set");
+                System.out.println("At least one of template or size must be set");
                 return;
             }
 

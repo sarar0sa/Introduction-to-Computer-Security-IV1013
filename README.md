@@ -34,6 +34,21 @@ $ javac HillDecipher.java
 $ java HillDecipher <radix> <blocksize> <keyfile> <plainfile> <cipherfile>
 ```
 
+### One Way Hash
+
+
+A brute-force method is used to see how long it takes to break the weak collision property,
+SHA256 is used as one-way hash function, but only the ﬁrst 24 bits of the hash value are used.
+
+The follwing messages was used to break the property:
+* IV1013 security
+* Security is fun
+* Yes, indeed
+* Secure IV1013
+* No way
+
+The program prints how many trials it took to to find a message with the same hash.
+
 ## Module 3 
 
 ### Password Cracker
